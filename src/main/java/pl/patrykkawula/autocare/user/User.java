@@ -1,13 +1,11 @@
-package pl.patrykkawula.autocare;
+package pl.patrykkawula.autocare.user;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.patrykkawula.autocare.car.Car;
 
 import java.util.List;
 
@@ -16,12 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id
+    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<Car> car;
 }
