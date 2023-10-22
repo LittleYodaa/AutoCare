@@ -18,6 +18,7 @@
             <column name="email" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="number_of_cars_owned" type="INTEGER"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

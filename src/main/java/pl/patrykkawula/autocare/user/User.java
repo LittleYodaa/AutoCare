@@ -20,6 +20,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private Integer numberOfCarsOwned;
     @OneToMany(mappedBy = "user")
     private List<Car> car;
 }

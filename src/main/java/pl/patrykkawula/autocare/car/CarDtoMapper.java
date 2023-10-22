@@ -4,6 +4,7 @@ package pl.patrykkawula.autocare.car;
 import org.springframework.stereotype.Service;
 import pl.patrykkawula.autocare.car.dtos.CarFullDto;
 import pl.patrykkawula.autocare.car.dtos.CarSaveDto;
+import pl.patrykkawula.autocare.car.dtos.CarInfoDto;
 import pl.patrykkawula.autocare.user.User;
 import pl.patrykkawula.autocare.user.UserRepository;
 
@@ -38,7 +39,7 @@ public class CarDtoMapper {
                 .build();
     }
 
-    public Car map (CarSaveDto carSaveDto) {
+    public Car mapToSave (CarSaveDto carSaveDto) {
         User user = userRepository.findById(carSaveDto.getUserId()).orElseThrow();
         return Car.builder()
                 .brand(carSaveDto.getBrand())
@@ -59,6 +60,28 @@ public class CarDtoMapper {
                 .registrationDate(car.getRegistrationDate())
                 .mileage(car.getMileage())
                 .userId(car.getUser().getId())
+                .build();
+    }
+
+    public Car mapToUpdate(CarInfoDto carInfoDto) {
+        return Car.builder()
+                .id(carInfoDto.getId())
+                .brand(carInfoDto.getBrand())
+                .model(carInfoDto.getModel())
+                .productionDate(carInfoDto.getProductionDate())
+                .registrationDate(carInfoDto.getRegistrationDate())
+                .mileage(carInfoDto.getMileage())
+                .build();
+    }
+
+    public CarInfoDto mapToUpdate(Car car) {
+        return CarInfoDto.builder()
+                .id(car.getId())
+                .brand(car.getBrand())
+                .model(car.getModel())
+                .productionDate(car.getProductionDate())
+                .registrationDate(car.getRegistrationDate())
+                .mileage(car.getMileage())
                 .build();
     }
 }
