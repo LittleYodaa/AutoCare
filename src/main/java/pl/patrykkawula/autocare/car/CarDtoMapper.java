@@ -17,14 +17,20 @@ public class CarDtoMapper {
     }
 
     public Car map(CarFullDto carFullDto) {
-        return new Car
-                (carFullDto.getId(),
-                        carFullDto.getBrand(),
-                        carFullDto.getModel(),
-                        carFullDto.getProductionDate(),
-                        carFullDto.getRegistrationDate(),
-                        carFullDto.getMileage(),
-                        carFullDto.getUser());
+        return Car.builder()
+                .id(carFullDto.getId())
+                .brand(carFullDto.getBrand())
+                .model(carFullDto.getModel())
+                .productionDate(carFullDto.getProductionDate())
+                .registrationDate(carFullDto.getRegistrationDate())
+                .mileage(carFullDto.getMileage())
+                .plannedAnnualMileage(carFullDto.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(carFullDto.getTechnicalInspectionEndDate())
+                .insurenceEndDate(carFullDto.getInsurenceEndDate())
+                .paymentRateDate(carFullDto.getPaymentRateDate())
+                .nextCarServiceDate(carFullDto.getNextCarServiceDate())
+                .user(carFullDto.getUser())
+                .build();
     }
 
     public CarFullDto map(Car car) {
@@ -35,6 +41,11 @@ public class CarDtoMapper {
                 .productionDate(car.getProductionDate())
                 .registrationDate(car.getRegistrationDate())
                 .mileage(car.getMileage())
+                .plannedAnnualMileage(car.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(car.getTechnicalInspectionEndDate())
+                .insurenceEndDate(car.getInsurenceEndDate())
+                .paymentRateDate(car.getPaymentRateDate())
+                .nextCarServiceDate(car.getNextCarServiceDate())
                 .user(car.getUser())
                 .build();
     }
