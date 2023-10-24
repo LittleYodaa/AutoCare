@@ -58,6 +58,11 @@ public class CarDtoMapper {
                 .productionDate(carSaveDto.getProductionDate())
                 .registrationDate(carSaveDto.getRegistrationDate())
                 .mileage(carSaveDto.getMileage())
+                .plannedAnnualMileage(carSaveDto.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(carSaveDto.getTechnicalInspectionEndDate())
+                .insurenceEndDate(carSaveDto.getInsurenceEndDate())
+                .paymentRateDate(carSaveDto.getPaymentRateDate())
+                .nextCarServiceDate(carSaveDto.getNextCarServiceDate())
                 .user(user)
                 .build();
     }
@@ -70,6 +75,11 @@ public class CarDtoMapper {
                 .productionDate(car.getProductionDate())
                 .registrationDate(car.getRegistrationDate())
                 .mileage(car.getMileage())
+                .plannedAnnualMileage(car.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(car.getTechnicalInspectionEndDate())
+                .insurenceEndDate(car.getInsurenceEndDate())
+                .paymentRateDate(car.getPaymentRateDate())
+                .nextCarServiceDate(car.getNextCarServiceDate())
                 .userId(car.getUser().getId())
                 .build();
     }
@@ -82,6 +92,11 @@ public class CarDtoMapper {
                 .productionDate(carInfoDto.getProductionDate())
                 .registrationDate(carInfoDto.getRegistrationDate())
                 .mileage(carInfoDto.getMileage())
+                .plannedAnnualMileage(carInfoDto.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(carInfoDto.getTechnicalInspectionEndDate())
+                .insurenceEndDate(carInfoDto.getInsurenceEndDate())
+                .paymentRateDate(carInfoDto.getPaymentRateDate())
+                .nextCarServiceDate(carInfoDto.getNextCarServiceDate())
                 .build();
     }
 
@@ -93,6 +108,11 @@ public class CarDtoMapper {
                 .productionDate(car.getProductionDate())
                 .registrationDate(car.getRegistrationDate())
                 .mileage(car.getMileage())
+                .plannedAnnualMileage(car.getPlannedAnnualMileage())
+                .technicalInspectionEndDate(car.getTechnicalInspectionEndDate())
+                .insurenceEndDate(car.getInsurenceEndDate())
+                .paymentRateDate(car.getPaymentRateDate())
+                .nextCarServiceDate(car.getNextCarServiceDate())
                 .build();
     }
 }

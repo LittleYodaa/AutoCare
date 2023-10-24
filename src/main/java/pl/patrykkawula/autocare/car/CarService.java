@@ -1,9 +1,11 @@
 package pl.patrykkawula.autocare.car;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.patrykkawula.autocare.car.dtos.CarFullDto;
 import pl.patrykkawula.autocare.car.dtos.CarSaveDto;
 import pl.patrykkawula.autocare.car.dtos.CarInfoDto;
+import pl.patrykkawula.autocare.user.UserService;
 
 import java.util.Optional;
 
@@ -11,21 +13,25 @@ import java.util.Optional;
 public class CarService {
     private final CarRepository carRepository;
     private final CarDtoMapper carDtoMapper;
+    private final UserService userService;
 
-    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper) {
+    public CarService(CarRepository carRepository, CarDtoMapper carDtoMapper, UserService userService) {
         this.carRepository = carRepository;
         this.carDtoMapper = carDtoMapper;
+        this.userService = userService;
     }
 
-    public CarSaveDto saveById(CarSaveDto carSaveDto) {
+    @Transactional
+    public CarSaveDto saveCar(CarSaveDto carSaveDto) {
         Car carToSave = carDtoMapper.mapToSave(carSaveDto);
         Car savedCar = carRepository.save(carToSave);
+        userService.countUsersCar(savedCar.getUser().getId());
         return carDtoMapper.mapToSave(savedCar);
     }
 
-    public Optional<CarInfoDto> findById(Long id) {
+    public Optional<CarSaveDto> findById(Long id) {
         return carRepository.findById(id)
-                .map(carDtoMapper::mapToUpdate);
+                .map(carDtoMapper::mapToSave);
     }
 
     public Optional<CarInfoDto> UpdateCar(Long id, CarInfoDto carInfoDto) {
@@ -38,12 +44,14 @@ public class CarService {
         return Optional.of(carDtoMapper.mapToUpdate(updatedCar));
     }
 
-    public void updateMileage(CarFullDto carFullDto) {
-        Car car = carDtoMapper.map(carFullDto);
+    public void updateCarFields(CarSaveDto carSaveDto) {
+        Car car = carDtoMapper.mapToSave(carSaveDto);
+        car.setId(carSaveDto.getId());
         carRepository.save(car);
     }
 
     public void deleteById(Long id){
         carRepository.deleteById(id);
+        userService.countUsersCar(id);
     }
 }

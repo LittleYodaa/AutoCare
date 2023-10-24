@@ -29,7 +29,7 @@ public class CarController {
 
     @PostMapping
     ResponseEntity<?> addCar(@RequestBody CarSaveDto carSaveDto) {
-        CarSaveDto savedCar = carService.saveById(carSaveDto);
+        CarSaveDto savedCar = carService.saveCar(carSaveDto);
         URI savedCarUri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedCar.getId())
@@ -38,7 +38,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<CarInfoDto> getCarById(@PathVariable Long id) {
+    ResponseEntity<CarSaveDto> getCarById(@PathVariable Long id) {
         return carService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -51,12 +51,32 @@ public class CarController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+//    @PatchMapping("/{id}")
+//    ResponseEntity<?> updateCarFields(@PathVariable Long id, @RequestBody JsonMergePatch patch) {
+//        try {
+//            CarInfoDto carInfoDto = carService.findById(id).orElseThrow();
+//            CarFullDto carPatched = applyPatch(carInfoDto, patch);
+//            carService.updateCarFields(carPatched);
+//        } catch (JsonPatchException | JsonProcessingException e) {
+//            return ResponseEntity.internalServerError().build();
+//        } catch (NoSuchElementException e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.noContent().build();
+//    }
+//
+//    private CarFullDto applyPatch(CarInfoDto carInfoDto, JsonMergePatch patch) throws JsonPatchException, JsonProcessingException {
+//        JsonNode jsonCarNode = objectMapper.valueToTree(carInfoDto);
+//        JsonNode carFullDtoPatchedNode = patch.apply(jsonCarNode);
+//        return objectMapper.treeToValue(carFullDtoPatchedNode, CarFullDto.class);
+//    }
+
     @PatchMapping("/{id}")
-    ResponseEntity<?> updateCarMileage(@PathVariable Long id, @RequestBody JsonMergePatch patch) {
+    ResponseEntity<?> updateCarFields(@PathVariable Long id, @RequestBody JsonMergePatch patch) {
         try {
-            CarInfoDto carInfoDto = carService.findById(id).orElseThrow();
-            CarFullDto carPatched = applyPatch(carInfoDto, patch);
-            carService.updateMileage(carPatched);
+            CarSaveDto carSaveDto = carService.findById(id).orElseThrow();
+            CarSaveDto carPatched = applyPatch(carSaveDto, patch);
+            carService.updateCarFields(carPatched);
         } catch (JsonPatchException | JsonProcessingException e) {
             return ResponseEntity.internalServerError().build();
         } catch (NoSuchElementException e) {
@@ -65,12 +85,11 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
-    private CarFullDto applyPatch(CarInfoDto carInfoDto, JsonMergePatch patch) throws JsonPatchException, JsonProcessingException {
-        JsonNode jsonCarNode = objectMapper.valueToTree(carInfoDto);
+    private CarSaveDto applyPatch(CarSaveDto carSaveDto, JsonMergePatch patch) throws JsonPatchException, JsonProcessingException {
+        JsonNode jsonCarNode = objectMapper.valueToTree(carSaveDto);
         JsonNode carFullDtoPatchedNode = patch.apply(jsonCarNode);
-        return objectMapper.treeToValue(carFullDtoPatchedNode, CarFullDto.class);
+        return objectMapper.treeToValue(carFullDtoPatchedNode, CarSaveDto.class);
     }
-
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteCar(@PathVariable Long id) {
         carService.deleteById(id);

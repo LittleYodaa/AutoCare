@@ -1,27 +1,27 @@
 package pl.patrykkawula.autocare.user;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
+import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
+import pl.patrykkawula.autocare.user.dtos.UserSaveDto;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserDtoMapper userDtoMapper;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserDtoMapper userDtoMapper) {
         this.userRepository = userRepository;
+        this.userDtoMapper = userDtoMapper;
     }
 
-    @Transactional
-    void countUsersCar(Long id) {
-        List<User> allUsers = userRepository.findAll();
-        for (User user : allUsers) {
-            user.setNumberOfCarsOwned(user.getCar().size());
-        }
+    public void countUsersCar(Long id) {
+        userRepository.findById(id).ifPresent(u -> u.setNumberOfCarsOwned(u.getCar().size()));
     }
 
 
-
-
+    UserInfoDto saveUser(UserSaveDto userSaveDto) {
+        User userToSave = userDtoMapper.map(userSaveDto);
+        User savedUser = userRepository.save(userToSave);
+        return userDtoMapper.map(savedUser);
+    }
 }
