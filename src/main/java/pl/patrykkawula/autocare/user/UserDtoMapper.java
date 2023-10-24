@@ -1,7 +1,6 @@
 package pl.patrykkawula.autocare.user;
 
 import org.springframework.stereotype.Service;
-import pl.patrykkawula.autocare.car.dtos.CarInfoDto;
 import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
 import pl.patrykkawula.autocare.user.dtos.UserSaveDto;
 

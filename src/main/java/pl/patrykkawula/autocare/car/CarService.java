@@ -2,9 +2,7 @@ package pl.patrykkawula.autocare.car;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.patrykkawula.autocare.car.dtos.CarFullDto;
 import pl.patrykkawula.autocare.car.dtos.CarSaveDto;
-import pl.patrykkawula.autocare.car.dtos.CarInfoDto;
 import pl.patrykkawula.autocare.user.UserService;
 
 import java.util.Optional;
@@ -34,14 +32,14 @@ public class CarService {
                 .map(carDtoMapper::mapToSave);
     }
 
-    public Optional<CarInfoDto> UpdateCar(Long id, CarInfoDto carInfoDto) {
+    public Optional<CarSaveDto> UpdateCar(Long id, CarSaveDto carSaveDto) {
         if (!carRepository.existsById(id)) {
             return Optional.empty();
         }
-        carInfoDto.setId(id);
-        Car carToUpdate = carDtoMapper.mapToUpdate(carInfoDto);
+        Car carToUpdate = carDtoMapper.mapToSave(carSaveDto);
+        carToUpdate.setId(id);
         Car updatedCar = carRepository.save(carToUpdate);
-        return Optional.of(carDtoMapper.mapToUpdate(updatedCar));
+        return Optional.of(carDtoMapper.mapToSave(updatedCar));
     }
 
     public void updateCarFields(CarSaveDto carSaveDto) {
