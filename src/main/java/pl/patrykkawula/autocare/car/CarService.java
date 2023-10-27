@@ -2,7 +2,7 @@ package pl.patrykkawula.autocare.car;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.patrykkawula.autocare.car.dtos.CarSaveDto;
+import pl.patrykkawula.autocare.car.dtos.CarDto;
 import pl.patrykkawula.autocare.user.UserService;
 
 import java.util.Optional;
@@ -20,31 +20,31 @@ public class CarService {
     }
 
     @Transactional
-    public CarSaveDto saveCar(CarSaveDto carSaveDto) {
-        Car carToSave = carDtoMapper.mapToSave(carSaveDto);
+    public CarDto saveCar(CarDto carDto) {
+        Car carToSave = carDtoMapper.mapToSave(carDto);
         Car savedCar = carRepository.save(carToSave);
         userService.countUsersCar(savedCar.getUser().getId());
         return carDtoMapper.mapToSave(savedCar);
     }
 
-    public Optional<CarSaveDto> findById(Long id) {
+    public Optional<CarDto> findById(Long id) {
         return carRepository.findById(id)
                 .map(carDtoMapper::mapToSave);
     }
 
-    public Optional<CarSaveDto> UpdateCar(Long id, CarSaveDto carSaveDto) {
+    public Optional<CarDto> UpdateCar(Long id, CarDto carDto) {
         if (!carRepository.existsById(id)) {
             return Optional.empty();
         }
-        Car carToUpdate = carDtoMapper.mapToSave(carSaveDto);
+        Car carToUpdate = carDtoMapper.mapToSave(carDto);
         carToUpdate.setId(id);
         Car updatedCar = carRepository.save(carToUpdate);
         return Optional.of(carDtoMapper.mapToSave(updatedCar));
     }
 
-    public void updateCarFields(CarSaveDto carSaveDto) {
-        Car car = carDtoMapper.mapToSave(carSaveDto);
-        car.setId(carSaveDto.getId());
+    public void updateCarFields(CarDto carDto) {
+        Car car = carDtoMapper.mapToSave(carDto);
+        car.setId(carDto.id());
         carRepository.save(car);
     }
 

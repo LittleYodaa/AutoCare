@@ -2,16 +2,14 @@ package pl.patrykkawula.autocare.user;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.patrykkawula.autocare.car.Car;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +22,7 @@ public class User {
     private String email;
     private Integer numberOfCarsOwned;
     @OneToMany(mappedBy = "user")
-    private List<Car> car;
+    private List<Car> cars;
+
+
 }

@@ -1,10 +1,7 @@
 package pl.patrykkawula.autocare.car;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.patrykkawula.autocare.user.User;
 
 import java.time.LocalDate;
@@ -12,8 +9,9 @@ import java.time.LocalDate;
 
 
 @Entity
-@Data
 @Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car {

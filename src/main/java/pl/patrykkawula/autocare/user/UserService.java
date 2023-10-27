@@ -1,8 +1,8 @@
 package pl.patrykkawula.autocare.user;
 
 import org.springframework.stereotype.Service;
-import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
-import pl.patrykkawula.autocare.user.dtos.UserSaveDto;
+import pl.patrykkawula.autocare.user.Exception.UserNotExistException;
+import pl.patrykkawula.autocare.user.dtos.UserDto;
 
 @Service
 public class UserService {
@@ -15,13 +15,18 @@ public class UserService {
     }
 
     public void countUsersCar(Long id) {
-        userRepository.findById(id).ifPresent(u -> u.setNumberOfCarsOwned(u.getCar().size()));
+        userRepository.findById(id).ifPresent(u -> u.setNumberOfCarsOwned(u.getCars().size()));
     }
 
 
-    UserInfoDto saveUser(UserSaveDto userSaveDto) {
+    UserDto saveUser(UserDto userSaveDto) {
         User userToSave = userDtoMapper.map(userSaveDto);
         User savedUser = userRepository.save(userToSave);
         return userDtoMapper.map(savedUser);
+    }
+
+    void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotExistException(id));
+        userRepository.delete(user);
     }
 }
