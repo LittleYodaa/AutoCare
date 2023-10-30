@@ -3,9 +3,8 @@ package pl.patrykkawula.autocare.car;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.patrykkawula.autocare.car.dtos.CarDto;
+import pl.patrykkawula.autocare.exception.CarNotFoundException;
 import pl.patrykkawula.autocare.user.UserService;
-
-import java.util.Optional;
 
 @Service
 public class CarService {
@@ -27,19 +26,16 @@ public class CarService {
         return carDtoMapper.mapToSave(savedCar);
     }
 
-    public Optional<CarDto> findById(Long id) {
+    public CarDto findById(Long id) {
         return carRepository.findById(id)
-                .map(carDtoMapper::mapToSave);
+                .map(carDtoMapper::mapToSave).orElseThrow(() -> new CarNotFoundException(id));
     }
 
-    public Optional<CarDto> UpdateCar(Long id, CarDto carDto) {
-        if (!carRepository.existsById(id)) {
-            return Optional.empty();
-        }
+    public CarDto updateCar(Long id, CarDto carDto) {
         Car carToUpdate = carDtoMapper.mapToSave(carDto);
         carToUpdate.setId(id);
         Car updatedCar = carRepository.save(carToUpdate);
-        return Optional.of(carDtoMapper.mapToSave(updatedCar));
+        return carDtoMapper.mapToSave(updatedCar);
     }
 
     public void updateCarFields(CarDto carDto) {
@@ -49,7 +45,8 @@ public class CarService {
     }
 
     public void deleteById(Long id){
-        carRepository.deleteById(id);
+        Car carToDelete = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
+        carRepository.delete(carToDelete);
         userService.countUsersCar(id);
     }
 }

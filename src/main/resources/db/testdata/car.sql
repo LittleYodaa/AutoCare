@@ -1,6 +1,6 @@
 INSERT INTO car
     (brand, model, production_date, registration_date, mileage, planned_annual_mileage, technical_inspection_end_date,
-     insurence_end_date, payment_rate_date, next_car_service_date, user_id)
+     insurance_end_date, payment_rate_date, next_car_service_date, user_id)
 VALUES
     ('Alfa Romeo', 'Giulia', '2017-07-12', '2018-02-10', 30000, 10000, '2024-01-15', '2024-03-20', null, '2024-05-28', 1),
     ('BMW', '3 series', '2007-07-08', '2008-08-09', 230000, 10000, '2024-01-15', '2024-03-20', null, '2024-05-28', 2),

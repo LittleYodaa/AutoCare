@@ -1,17 +1,19 @@
 package pl.patrykkawula.autocare.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.patrykkawula.autocare.user.Exception.UserNotExistException;
 import pl.patrykkawula.autocare.user.dtos.UserDto;
+import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
 
 import java.net.URI;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
-public class UserController {
-    private final UserService userService;
+    public class UserController {
+        private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -24,16 +26,26 @@ public class UserController {
                 .path("/{id}")
                 .buildAndExpand(userDto.id())
                 .toUri();
+        log.info("Add new user {}", userDto);
         return ResponseEntity.created(savedUserUri).build();
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<UserInfoDto> findUser(@PathVariable Long id) {
+        UserInfoDto foundUser = userService.findById(id);
+        return ResponseEntity.ok(foundUser);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<UserInfoDto> updateUser(@PathVariable Long id, @RequestBody UserInfoDto userInfoDto) {
+        UserInfoDto updatedUser = userService.updateUser(id, userInfoDto);
+        log.info("Update user with id {}", id);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-        } catch (UserNotExistException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

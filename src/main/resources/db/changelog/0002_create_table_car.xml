@@ -30,7 +30,7 @@
             <column name="technical_inspection_end_date" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="insurence_end_date" type="DATE">
+            <column name="insurance_end_date" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="payment_rate_date" type="DATE"/>

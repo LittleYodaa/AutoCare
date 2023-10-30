@@ -14,7 +14,7 @@ public record CarDto(
         Integer mileage,
         Integer plannedAnnualMileage,
         LocalDate technicalInspectionEndDate,
-        LocalDate insurenceEndDate,
+        LocalDate insuranceEndDate,
         LocalDate paymentRateDate,
         LocalDate nextCarServiceDate,
         Long userId

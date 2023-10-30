@@ -1,8 +1,9 @@
 package pl.patrykkawula.autocare.user;
 
 import org.springframework.stereotype.Service;
-import pl.patrykkawula.autocare.user.Exception.UserNotExistException;
+import pl.patrykkawula.autocare.exception.UserNotFoundException;
 import pl.patrykkawula.autocare.user.dtos.UserDto;
+import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
 
 @Service
 public class UserService {
@@ -19,14 +20,26 @@ public class UserService {
     }
 
 
-    UserDto saveUser(UserDto userSaveDto) {
-        User userToSave = userDtoMapper.map(userSaveDto);
+    UserDto saveUser(UserDto userDto) {
+        User userToSave = userDtoMapper.map(userDto);
         User savedUser = userRepository.save(userToSave);
-        return userDtoMapper.map(savedUser);
+        return userDtoMapper.mapToUserDto(savedUser);
     }
 
-    void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotExistException(id));
+    UserInfoDto findById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userDtoMapper.mapToUserInfoDto(user);
+    }
+
+    UserInfoDto updateUser(Long id, UserInfoDto userInfoDto) {
+        User userToSave = userDtoMapper.map(userInfoDto);
+        userToSave.setId(id);
+        User savedUser = userRepository.save(userToSave);
+        return userDtoMapper.mapToUserInfoDto(savedUser);
+    }
+
+    void deleteById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         userRepository.delete(user);
     }
 }

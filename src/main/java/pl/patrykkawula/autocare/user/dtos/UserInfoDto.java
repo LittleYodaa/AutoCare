@@ -3,8 +3,7 @@ package pl.patrykkawula.autocare.user.dtos;
 import lombok.Builder;
 
 @Builder
-public record UserDto(
-        Long id,
+public record UserInfoDto(
         String firstName,
         String lastName,
         String email,

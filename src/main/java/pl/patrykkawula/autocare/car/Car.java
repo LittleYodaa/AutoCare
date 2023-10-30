@@ -25,7 +25,7 @@ public class Car {
     private Integer mileage;
     private Integer plannedAnnualMileage;
     private LocalDate technicalInspectionEndDate;
-    private LocalDate insurenceEndDate;
+    private LocalDate insuranceEndDate;
     private LocalDate paymentRateDate;
     private LocalDate nextCarServiceDate;
     @ManyToOne
