@@ -14,7 +14,7 @@ public class CarDtoMapper {
         this.userRepository = userRepository;
     }
 
-    public Car mapToSave (CarDto carDto) {
+    public Car map(CarDto carDto) {
         User user = userRepository.findById(carDto.userId()).orElseThrow();
         return Car.builder()
                 .brand(carDto.brand())
@@ -31,7 +31,7 @@ public class CarDtoMapper {
                 .build();
     }
 
-    public CarDto mapToSave (Car car) {
+    public CarDto mapToCarDto(Car car) {
         return CarDto.builder()
                 .id(car.getId())
                 .brand(car.getBrand())

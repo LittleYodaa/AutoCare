@@ -6,6 +6,8 @@ import pl.patrykkawula.autocare.car.dtos.CarDto;
 import pl.patrykkawula.autocare.exception.CarNotFoundException;
 import pl.patrykkawula.autocare.user.UserService;
 
+import java.util.List;
+
 @Service
 public class CarService {
     private final CarRepository carRepository;
@@ -20,26 +22,26 @@ public class CarService {
 
     @Transactional
     public CarDto saveCar(CarDto carDto) {
-        Car carToSave = carDtoMapper.mapToSave(carDto);
+        Car carToSave = carDtoMapper.map(carDto);
         Car savedCar = carRepository.save(carToSave);
         userService.countUsersCar(savedCar.getUser().getId());
-        return carDtoMapper.mapToSave(savedCar);
+        return carDtoMapper.mapToCarDto(savedCar);
     }
 
     public CarDto findById(Long id) {
         return carRepository.findById(id)
-                .map(carDtoMapper::mapToSave).orElseThrow(() -> new CarNotFoundException(id));
+                .map(carDtoMapper::mapToCarDto).orElseThrow(() -> new CarNotFoundException(id));
     }
 
     public CarDto updateCar(Long id, CarDto carDto) {
-        Car carToUpdate = carDtoMapper.mapToSave(carDto);
+        Car carToUpdate = carDtoMapper.map(carDto);
         carToUpdate.setId(id);
         Car updatedCar = carRepository.save(carToUpdate);
-        return carDtoMapper.mapToSave(updatedCar);
+        return carDtoMapper.mapToCarDto(updatedCar);
     }
 
     public void updateCarFields(CarDto carDto) {
-        Car car = carDtoMapper.mapToSave(carDto);
+        Car car = carDtoMapper.map(carDto);
         car.setId(carDto.id());
         carRepository.save(car);
     }

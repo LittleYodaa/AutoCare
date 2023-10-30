@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.patrykkawula.autocare.car.CarBrandModel;
 import pl.patrykkawula.autocare.user.dtos.UserDto;
 import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
 
 import java.net.URI;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,6 +36,12 @@ import java.net.URI;
     ResponseEntity<UserInfoDto> findUser(@PathVariable Long id) {
         UserInfoDto foundUser = userService.findById(id);
         return ResponseEntity.ok(foundUser);
+    }
+
+    @GetMapping("/{id}/cars")
+    ResponseEntity<List<CarBrandModel>> getAllUserCars(@PathVariable Long id) {
+        List<CarBrandModel> allUserCars = userService.findCarsByUserId(id);
+        return ResponseEntity.ok(allUserCars);
     }
 
     @PutMapping("/{id}")
