@@ -35,7 +35,7 @@ public class UserService {
         return userDtoMapper.mapToUserDto(savedUser);
     }
 
-    UserInfoDto findById(Long id) {
+    public UserInfoDto findById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return userDtoMapper.mapToUserInfoDto(user);
     }

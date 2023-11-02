@@ -4,12 +4,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
 
-    @Query(value = "SELECT car.brand AS brand, car.model AS model FROM car WHERE user_id = id",
+    @Query(value = "SELECT brand AS brand, model AS model FROM car WHERE user_id = :id",
             nativeQuery = true)
-    List<CarBrandModel> findCarsByUserId(@Param("id" ) Long id);
+    List<CarBrandModel> findCarsByUserId(Long id);
+
+
+
+    //todo
+    //Check 1
+    @Query(value = "SELECT id FROM car WHERE technical_inspection_end_date = :localDataTime",
+            nativeQuery = true)
+    Long carId(LocalDate localDate);
 
 }

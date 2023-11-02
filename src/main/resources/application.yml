@@ -8,3 +8,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: patrykkawulaapp@gmail.com
+    password: mili mdyl xoak wgud
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
