@@ -1,4 +1,4 @@
-package pl.patrykkawula.email;
+package pl.patrykkawula.autocare.email;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
