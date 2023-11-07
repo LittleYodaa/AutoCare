@@ -1,23 +1,40 @@
 package pl.patrykkawula.autocare.email;
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.patrykkawula.autocare.email.dtos.EmailDto;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class EmailService {
-    private final JavaMailSender javaMailSender;
+    private final EmailRepository emailRepository;
+    private final EmailDtoMapper emailDtoMapper;
 
-    public EmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+    public EmailService(EmailRepository emailRepository, EmailDtoMapper emailDtoMapper) {
+        this.emailRepository = emailRepository;
+        this.emailDtoMapper = emailDtoMapper;
     }
 
-    public void sendEmail(Email email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("patrykkawulaapp@gmail.com");
-        message.setTo(email.getTo());
-        message.setSubject(email.getSubject());
-        message.setText(email.getText());
-        javaMailSender.send(message);
+
+    public void saveAll(List<Email> emails) {
+        emailRepository.saveAll(emails);
+    }
+
+    @Transactional
+    public void updateAllEmailsStatusAndDateOfSend() {
+        emailRepository.findAllByStatusEqualsUnsent().forEach(email -> {
+            email.setStatus(Email.Status.SENT);
+            email.setDateOfSend(LocalDate.now());
+        });
+    }
+
+    List<EmailDto> findAllWithUnsentStatus() {
+        return emailRepository.findAllByStatusEqualsUnsent()
+                .stream()
+                .map(emailDtoMapper::mapToEmailDto)
+                .toList();
     }
 }
