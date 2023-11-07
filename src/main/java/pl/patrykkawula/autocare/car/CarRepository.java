@@ -12,12 +12,8 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             nativeQuery = true)
     List<CarBrandModel> findCarsByUserId(Long id);
 
-
-
-    //todo
-    //Check 1
     @Query(value = "SELECT id FROM car WHERE technical_inspection_end_date = :localDate",
             nativeQuery = true)
-    Long findIncomingTechnicaServiceDate(LocalDate localDate);
+    List<Long> findIncomingTechnicalServiceDate(LocalDate localDate);
 
 }

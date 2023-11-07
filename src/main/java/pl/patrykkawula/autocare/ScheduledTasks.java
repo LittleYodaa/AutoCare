@@ -5,32 +5,24 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.patrykkawula.autocare.car.CarRepository;
-import pl.patrykkawula.autocare.car.CarService;
-import pl.patrykkawula.autocare.car.dtos.CarDto;
-import pl.patrykkawula.autocare.user.UserService;
-import pl.patrykkawula.autocare.email.Email;
-import pl.patrykkawula.autocare.email.EmailService;
-import pl.patrykkawula.autocare.email.EmailTemplate;
+import pl.patrykkawula.autocare.email.*;
+import pl.patrykkawula.autocare.email.dtos.EmailDto;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
 public class ScheduledTasks {
-    private static final int ONE_DAY_TO_DATE = 1;
-    private static final int SEVEN_DAYS_TO_DATE = 7;
-    private final EmailService emailService;
-    private final EmailTemplate emailTemplate;
+    private final EmailSendingService emailSendingService;
     private final CarRepository carRepository;
-    private final CarService carService;
-    private final UserService userService;
+    private final PrepareEmail prepareEmail;
+    private final EmailService emailService;
 
-    public ScheduledTasks(EmailService emailService, EmailTemplate emailTemplate, CarRepository carRepository, CarService carService, UserService userService) {
-        this.emailService = emailService;
-        this.emailTemplate = emailTemplate;
+    public ScheduledTasks(EmailSendingService emailSendingService, CarRepository carRepository, PrepareEmail prepareEmail, EmailService emailService) {
+        this.emailSendingService = emailSendingService;
         this.carRepository = carRepository;
-        this.carService = carService;
-        this.userService = userService;
+        this.prepareEmail = prepareEmail;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -39,15 +31,21 @@ public class ScheduledTasks {
         carRepository.findAll().forEach(c -> c.setMileage(c.getMileage() + (c.getPlannedAnnualMileage() / 365)));
     }
 
-    @Scheduled(cron = "* 10 10 * * *")
-    public void checkTechnicalInspectionDate() {
-        Long carId = carRepository.findIncomingTechnicaServiceDate(LocalDate.now().plusDays(SEVEN_DAYS_TO_DATE));
-        if (carId != null) {
-            CarDto carDto = carService.findById(carId);
-            String emailAddress = userService.findById(carDto.userId()).email();
-            Email email = emailTemplate.technicalInspectionEmail(emailAddress);
-            emailService.sendEmail(email);
-            log.info("Wysłano wiadomość email");
-        }
+//    @Scheduled(cron = "0 10 10 * * *")
+    @Scheduled(cron = "20 * * * * *")
+    @Transactional
+    public void saveEmailToSend() {
+        List<Email> listOfEmailToSave = prepareEmail.createListOfEmail();
+        log.info("Prepare email to send");
+        emailService.saveAll(listOfEmailToSave);
+        log.info("Save email to send");
+    }
+
+//    @Scheduled(cron = "0 10 20 * * *")
+    @Scheduled(cron = "30 * * * * *")
+    @Transactional
+    public void sendEmail() {
+        emailSendingService.sendEmail();
+        log.info("Send email");
     }
 }

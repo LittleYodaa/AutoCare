@@ -8,4 +8,5 @@
     <include file="0002_create_table_car.xml" relativeToChangelogFile="true"></include>
     <include file="db/testdata/car.sql"></include>
     <include file="db/testdata/user.sql"></include>
+    <include file="0003_create_table_email.xml" relativeToChangelogFile="true"></include>
 </databaseChangeLog>

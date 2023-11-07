@@ -4,6 +4,7 @@ package pl.patrykkawula.autocare.user;
 import jakarta.persistence.*;
 import lombok.*;
 import pl.patrykkawula.autocare.car.Car;
+import pl.patrykkawula.autocare.email.Email;
 
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class User {
     private String lastName;
     private String email;
     private Integer numberOfCarsOwned;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Car> cars;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Email> emails;
 
 
 }

@@ -16,7 +16,7 @@ public class UserDtoMapper {
                 .build();
     }
 
-    User map(UserInfoDto userInfoDto) {
+    public User map(UserInfoDto userInfoDto) {
         return User.builder()
                 .firstName(userInfoDto.firstName())
                 .lastName(userInfoDto.lastName())
