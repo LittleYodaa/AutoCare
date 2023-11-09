@@ -41,7 +41,6 @@ public class PrepareTechnicalInspectionEmail implements PrepareEmail{
         Email email = new Email();
         email.setSubject("Badanie techniczne");
         email.setText(String.format("Twoje badanie techniczne straci ważność za %s dni.", SEVEN_DAYS_TO_DATE));
-//        email.setEmailRecipient("kawul1996@gmail.com");
         email.setEmailRecipient(userService.findById(carDto.userId()).email());
         email.setStatus(Email.Status.UNSENT);
         email.setUser(userDtoMapper.map(userService.findById(carDto.userId())));

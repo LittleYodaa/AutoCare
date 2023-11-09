@@ -22,6 +22,8 @@ public class Email {
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDate dateOfSend;
+    //todo
+    //bez tego nie działa
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
 

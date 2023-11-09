@@ -6,7 +6,6 @@ import pl.patrykkawula.autocare.email.dtos.EmailDto;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class EmailService {
@@ -25,14 +24,21 @@ public class EmailService {
 
     @Transactional
     public void updateAllEmailsStatusAndDateOfSend() {
-        emailRepository.findAllByStatusEqualsUnsent().forEach(email -> {
+        emailRepository.findAllByStatus(Email.Status.UNSENT).forEach(email -> {
             email.setStatus(Email.Status.SENT);
             email.setDateOfSend(LocalDate.now());
         });
     }
 
     List<EmailDto> findAllWithUnsentStatus() {
-        return emailRepository.findAllByStatusEqualsUnsent()
+        return emailRepository.findAllByStatus(Email.Status.UNSENT)
+                .stream()
+                .map(emailDtoMapper::mapToEmailDto)
+                .toList();
+    }
+
+    List<EmailDto> findAll() {
+        return emailRepository.findAll()
                 .stream()
                 .map(emailDtoMapper::mapToEmailDto)
                 .toList();

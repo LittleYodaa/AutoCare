@@ -22,9 +22,9 @@ public class User {
     private String lastName;
     private String email;
     private Integer numberOfCarsOwned;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Car> cars;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Email> emails;
 
 

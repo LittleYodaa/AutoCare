@@ -32,7 +32,7 @@ public class ScheduledTasks {
     }
 
 //    @Scheduled(cron = "0 10 10 * * *")
-    @Scheduled(cron = "20 * * * * *")
+    @Scheduled(cron = "10,30,50 * * * * *")
     @Transactional
     public void saveEmailToSend() {
         List<Email> listOfEmailToSave = prepareEmail.createListOfEmail();
@@ -42,7 +42,7 @@ public class ScheduledTasks {
     }
 
 //    @Scheduled(cron = "0 10 20 * * *")
-    @Scheduled(cron = "30 * * * * *")
+    @Scheduled(cron = "15,35,55 * * * * *")
     @Transactional
     public void sendEmail() {
         emailSendingService.sendEmail();

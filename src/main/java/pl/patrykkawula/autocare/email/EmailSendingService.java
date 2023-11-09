@@ -22,7 +22,6 @@ public class EmailSendingService {
 
     }
 
-
     public void sendEmail() {
         List<EmailDto> emailDtos = emailService.findAllWithUnsentStatus();
         List<EmailSendDto> emailSendDtos = emailDtos.stream()
