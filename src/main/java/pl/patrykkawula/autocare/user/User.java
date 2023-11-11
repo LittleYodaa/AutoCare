@@ -24,7 +24,8 @@ public class User {
     private Integer numberOfCarsOwned;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Car> cars;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
     private List<Email> emails;
 
 

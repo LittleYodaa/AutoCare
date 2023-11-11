@@ -5,8 +5,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.patrykkawula.autocare.car.CarRepository;
-import pl.patrykkawula.autocare.email.*;
-import pl.patrykkawula.autocare.email.dtos.EmailDto;
+import pl.patrykkawula.autocare.email.Email;
+import pl.patrykkawula.autocare.email.EmailSendingService;
+import pl.patrykkawula.autocare.email.EmailService;
+import pl.patrykkawula.autocare.email.PrepareEmail;
 
 import java.util.List;
 
@@ -32,17 +34,16 @@ public class ScheduledTasks {
     }
 
 //    @Scheduled(cron = "0 10 10 * * *")
-    @Scheduled(cron = "10,30,50 * * * * *")
+//    @Scheduled(cron = "10,30,50 * * * * *")
     @Transactional
     public void saveEmailToSend() {
         List<Email> listOfEmailToSave = prepareEmail.createListOfEmail();
-        log.info("Prepare email to send");
         emailService.saveAll(listOfEmailToSave);
-        log.info("Save email to send");
+        log.info("Saved : {} email to send", listOfEmailToSave.size());
     }
 
 //    @Scheduled(cron = "0 10 20 * * *")
-    @Scheduled(cron = "15,35,55 * * * * *")
+//    @Scheduled(cron = "15,35,55 * * * * *")
     @Transactional
     public void sendEmail() {
         emailSendingService.sendEmail();

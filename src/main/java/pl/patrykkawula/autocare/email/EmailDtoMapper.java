@@ -38,12 +38,10 @@ public class EmailDtoMapper {
                 .subject(email.getSubject())
                 .status(email.getStatus())
                 .dateOfSend(email.getDateOfSend())
-                .userId(email.getUser().getId())
                 .build();
     }
 
     Email map(EmailDto emailDto) {
-        User user = userRepository.findById(emailDto.userId()).orElseThrow();
         return Email.builder()
                 .id(emailDto.id())
                 .emailRecipient(emailDto.emailRecipient())
@@ -51,7 +49,6 @@ public class EmailDtoMapper {
                 .subject(emailDto.subject())
                 .status(emailDto.status())
                 .dateOfSend(emailDto.dateOfSend())
-                .user(user)
                 .build();
     }
 

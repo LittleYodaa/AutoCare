@@ -23,7 +23,7 @@
             </column>
             <column name="date_of_send" type="DATE"/>
             <column name="user_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_email_user_id" referencedTableName="user" referencedColumnNames="id"/>
+                <constraints nullable="true" foreignKeyName="fk_email_user_id" referencedTableName="user" referencedColumnNames="id"/>
             </column>
         </createTable>
     </changeSet>

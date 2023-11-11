@@ -2,7 +2,6 @@ package pl.patrykkawula.autocare.email;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.patrykkawula.autocare.user.User;
 
 import java.time.LocalDate;
 
@@ -22,18 +21,10 @@ public class Email {
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDate dateOfSend;
-    //todo
-    //bez tego nie działa
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private User user;
 
     public enum Status{
-        SENT("wysłano"),
-        UNSENT("nie wysłano");
-        private String description;
+        SENT,
+        UNSENT;
 
-        Status(String description) {
-            this.description = description;
-        }
     }
 }
