@@ -2,6 +2,7 @@ package pl.patrykkawula.autocare.email;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.patrykkawula.autocare.user.User;
 
 import java.time.LocalDate;
 
@@ -21,8 +22,10 @@ public class Email {
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDate dateOfSend;
+    @ManyToOne
+    User user;
 
-    public enum Status{
+    public enum Status {
         SENT,
         UNSENT;
 

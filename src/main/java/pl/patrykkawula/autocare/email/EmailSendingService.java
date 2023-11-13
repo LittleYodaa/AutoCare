@@ -3,7 +3,6 @@ package pl.patrykkawula.autocare.email;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pl.patrykkawula.autocare.email.dtos.EmailDto;
 import pl.patrykkawula.autocare.email.dtos.EmailSendDto;
 

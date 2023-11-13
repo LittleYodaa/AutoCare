@@ -1,6 +1,6 @@
 package pl.patrykkawula.autocare.email;
 
-public interface IncomingTechnicalServiceEmailView {
+public interface IncomingEmailView {
     UserEmailView getUser();
 
     interface UserEmailView {
