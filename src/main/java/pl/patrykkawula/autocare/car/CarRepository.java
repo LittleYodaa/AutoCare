@@ -17,4 +17,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<IncomingEmailView> getAllByInsuranceEndDate(LocalDate insuranceEndDate);
 
+    List<IncomingEmailView> getAllByNextCarServiceDate(LocalDate serviceEndDate);
+
+    List<IncomingEmailView> getAllByPaymentRateDate(LocalDate paymentRateEndDate);
 }

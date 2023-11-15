@@ -1,17 +1,16 @@
-package pl.patrykkawula.autocare.email.insuranceEmail;
+package pl.patrykkawula.autocare.email.emailPreparation;
 
 import org.springframework.stereotype.Service;
 import pl.patrykkawula.autocare.car.CarRepository;
 import pl.patrykkawula.autocare.email.Email;
 import pl.patrykkawula.autocare.email.IncomingEmailView;
-import pl.patrykkawula.autocare.email.PrepareEmail;
 import pl.patrykkawula.autocare.user.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class PrepareInsuranceEmail implements PrepareEmail {
+class PrepareInsuranceEmail implements PrepareEmail {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
 

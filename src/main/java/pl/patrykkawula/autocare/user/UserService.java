@@ -25,8 +25,9 @@ public class UserService {
     }
 
 
-    //todo
-    //nie działa zliczanie aut użytkownika
+//todo
+    //nie działa zliczanie aut
+
     public void countUsersCar(Long id) {
         userRepository.findById(id).ifPresent(u -> u.setNumberOfCarsOwned(u.getCars().size()));
     }

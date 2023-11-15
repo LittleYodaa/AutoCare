@@ -1,6 +1,7 @@
-package pl.patrykkawula.autocare.email;
+package pl.patrykkawula.autocare.email.emailPreparation;
 
 import org.springframework.stereotype.Service;
+import pl.patrykkawula.autocare.email.Email;
 
 import java.util.ArrayList;
 import java.util.List;
