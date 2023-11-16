@@ -53,7 +53,6 @@ To get a local copy up and running follow these simple steps.
    mvn spring-boot:run
    ```
 
-***
 After launching the application, Swagger documentation available at the link http://localhost:8080/swagger-ui/index.html
 
 ## Exploring AutoCare
