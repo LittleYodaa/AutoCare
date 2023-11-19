@@ -3,7 +3,6 @@ package pl.patrykkawula.autocare.email;
 import org.springframework.stereotype.Service;
 import pl.patrykkawula.autocare.email.dtos.EmailDto;
 import pl.patrykkawula.autocare.email.dtos.EmailSendDto;
-import pl.patrykkawula.autocare.user.User;
 import pl.patrykkawula.autocare.user.UserRepository;
 
 @Service

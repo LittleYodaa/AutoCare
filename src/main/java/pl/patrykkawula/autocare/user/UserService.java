@@ -1,7 +1,7 @@
 package pl.patrykkawula.autocare.user;
 
 import org.springframework.stereotype.Service;
-import pl.patrykkawula.autocare.car.CarBrandModel;
+import pl.patrykkawula.autocare.car.CarBrandModelView;
 import pl.patrykkawula.autocare.car.CarDtoMapper;
 import pl.patrykkawula.autocare.car.CarRepository;
 import pl.patrykkawula.autocare.exception.UserNotFoundException;
@@ -14,19 +14,15 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
-    private final CarDtoMapper carDtoMapper;
     private final CarRepository carRepository;
 
     public UserService(UserRepository userRepository, UserDtoMapper userDtoMapper, CarDtoMapper carDtoMapper, CarRepository carRepository) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
-        this.carDtoMapper = carDtoMapper;
         this.carRepository = carRepository;
     }
-
-
-//todo
-    //nie działa zliczanie aut
+    //todo
+    //nie działa zliczanie
 
     public void countUsersCar(Long id) {
         userRepository.findById(id).ifPresent(u -> u.setNumberOfCarsOwned(u.getCars().size()));
@@ -44,7 +40,7 @@ public class UserService {
         return userDtoMapper.mapToUserInfoDto(user);
     }
 
-    List<CarBrandModel> findCarsByUserId(Long id) {
+    List<CarBrandModelView> findCarsByUserId(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return carRepository.findCarsByUserId(user.getId());
     }

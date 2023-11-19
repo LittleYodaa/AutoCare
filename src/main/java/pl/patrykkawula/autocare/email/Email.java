@@ -27,7 +27,7 @@ public class Email {
 
     public enum Status {
         SENT,
-        UNSENT;
+        UNSENT
 
     }
 }

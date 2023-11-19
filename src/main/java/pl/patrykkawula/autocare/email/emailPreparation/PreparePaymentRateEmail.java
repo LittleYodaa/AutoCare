@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class PreparePaymentRateEmail implements PrepareEmail {
+class PreparePaymentRateEmail implements PrepareEmail {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
 

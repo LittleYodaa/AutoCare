@@ -11,7 +11,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     @Query(value = "SELECT brand AS brand, model AS model FROM car WHERE user_id = :id",
             nativeQuery = true)
-    List<CarBrandModel> findCarsByUserId(Long id);
+    List<CarBrandModelView> findCarsByUserId(Long id);
 
     List<IncomingEmailView> getAllByTechnicalInspectionEndDate(LocalDate technicalInspectionEndDate);
 

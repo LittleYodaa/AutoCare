@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.patrykkawula.autocare.car.CarBrandModel;
+import pl.patrykkawula.autocare.car.CarBrandModelView;
 import pl.patrykkawula.autocare.user.dtos.UserDto;
 import pl.patrykkawula.autocare.user.dtos.UserInfoDto;
 
@@ -39,8 +39,8 @@ import java.util.List;
     }
 
     @GetMapping("/{id}/cars")
-    ResponseEntity<List<CarBrandModel>> getAllUserCars(@PathVariable Long id) {
-        List<CarBrandModel> allUserCars = userService.findCarsByUserId(id);
+    ResponseEntity<List<CarBrandModelView>> getAllUserCars(@PathVariable Long id) {
+        List<CarBrandModelView> allUserCars = userService.findCarsByUserId(id);
         return ResponseEntity.ok(allUserCars);
     }
 

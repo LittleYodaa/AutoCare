@@ -9,4 +9,6 @@
     <include file="db/testdata/car.sql"></include>
     <include file="db/testdata/user.sql"></include>
     <include file="0003_create_table_email.xml" relativeToChangelogFile="true"></include>
+    <include file="0004_create_table_cost.xml" relativeToChangelogFile="true"></include>
+    <include file="db/testdata/cost.sql"></include>
 </databaseChangeLog>
