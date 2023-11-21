@@ -3,16 +3,18 @@ package pl.patrykkawula.autocare.usageCost;
 import com.lowagie.text.DocumentException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.patrykkawula.autocare.usageCost.dtos.NewCostDto;
 import pl.patrykkawula.autocare.usageCost.dtos.CostViewDto;
-import pl.patrykkawula.autocare.user.dtos.CostView;
+import pl.patrykkawula.autocare.usageCost.dtos.NewCostDto;
+import pl.patrykkawula.autocare.usageCost.pdfPreparation.PdfGenerator;
 
 import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +23,11 @@ import java.util.List;
 @RequestMapping("/cost")
 public class CostController {
     private final CostService costService;
+    private final PdfGenerator pdfGenerator;
 
-    CostController(CostService costService) {
+    CostController(CostService costService, PdfGenerator pdfGenerator) {
         this.costService = costService;
+        this.pdfGenerator = pdfGenerator;
     }
 
     @PostMapping
@@ -38,20 +42,22 @@ public class CostController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<List<CostView>> getAllCosts(@PathVariable Long id) {
-        List<CostView> allCosts = costService.findAllCosts(id);
+    ResponseEntity<List<CostViewDto>> getAllCosts(@PathVariable Long id) {
+        List<CostViewDto> allCosts = costService.findAllCosts(id);
         return ResponseEntity.ok(allCosts);
     }
 
     @GetMapping("/pdf/{id}")
-    public void generatePdfFile(@PathVariable Long id, HttpServletResponse response) throws DocumentException, IOException {
+    public void generatePdfWithAllCost(@PathVariable Long id,
+                                       @RequestParam(required = false) String costType,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                       HttpServletResponse response) throws DocumentException, IOException {
         response.setContentType("application/pdf");
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD:HH:MM:SS");
         String currentDateTime = dateFormat.format(new Date());
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=student" + currentDateTime + ".pdf";
-        List<CostView> allCosts = costService.findAllCosts(id);
-        PdfGenerator generator = new PdfGenerator();
-        generator.generate(allCosts, response);
+        pdfGenerator.getCosts(id, costType, startDate, endDate, response);
     }
 }

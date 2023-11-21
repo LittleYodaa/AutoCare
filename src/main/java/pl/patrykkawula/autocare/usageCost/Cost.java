@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.patrykkawula.autocare.car.Car;
 
+import java.time.LocalDate;
+
 @Entity
 @Builder
 @Getter
@@ -18,6 +20,7 @@ public class Cost {
     private CostType costType;
     private String description;
     private Double cost;
+    private LocalDate dateOfAdd;
     @ManyToOne
     private Car car;
 

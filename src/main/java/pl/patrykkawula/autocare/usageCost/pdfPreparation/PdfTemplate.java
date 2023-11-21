@@ -1,23 +1,26 @@
-package pl.patrykkawula.autocare.usageCost;
+package pl.patrykkawula.autocare.usageCost.pdfPreparation;
 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
+import com.lowagie.text.pdf.CMYKColor;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
-import pl.patrykkawula.autocare.user.dtos.CostView;
-
+import org.springframework.stereotype.Service;
+import pl.patrykkawula.autocare.usageCost.dtos.PdfCostDto;
 
 import java.io.IOException;
 import java.util.List;
 
-
-class PdfGenerator {
-    public void generate(List<CostView> costList, HttpServletResponse response) throws IOException, DocumentException {
+@Service
+class PdfTemplate {
+    public void generatePdfTemplate(List<PdfCostDto> costList, HttpServletResponse response, String pdfName) throws IOException, DocumentException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
         Font fontTitle = FontFactory.getFont(FontFactory.TIMES_ROMAN);
         fontTitle.setSize(20);
-        Paragraph firstParagraph = new Paragraph("Car exploatation costs", fontTitle);
+        Paragraph firstParagraph = new Paragraph(pdfName, fontTitle);
         firstParagraph.setAlignment(Paragraph.ALIGN_LEFT);
         document.add(firstParagraph);
         PdfPTable table = new PdfPTable(3);
@@ -36,10 +39,10 @@ class PdfGenerator {
         table.addCell(cell);
         cell.setPhrase(new Phrase("Cost", font));
         table.addCell(cell);
-        for (CostView cost : costList) {
-            table.addCell(String.valueOf(cost.getCostType()));
-            table.addCell(String.valueOf(cost.getDescription()));
-            table.addCell(String.valueOf(cost.getCost()));
+        for (PdfCostDto cost : costList) {
+            table.addCell(String.valueOf(cost.costType()));
+            table.addCell(String.valueOf(cost.description()));
+            table.addCell(String.valueOf(cost.cost()));
         }
         document.add(table);
         document.close();
