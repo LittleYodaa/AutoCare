@@ -80,6 +80,14 @@ CRUD operation and available endpoints
 | DELETE | /users/{id}                            | Deletes lesson user with id in path variable with all assigned cars.            |                                                |                                                                                                                                                                                                                            |    
 
 
+### Cost
+
+| Method | Url            | Description                                                                                        | Example of valid Request Body                                                                                                                                                                                         |
+|--------|----------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| POST    | /cost | Add new cost to car.                                                                                 |                                                                                                                                                                                                                       |
+| GET   | /cost/{id}      | Get all car usage costs.                                                                                  |  |
+| GET    | /cost/pdf/{id} | Get all car usage costs in pdf file. |                |
+
 ## Design Patterns
 
 
